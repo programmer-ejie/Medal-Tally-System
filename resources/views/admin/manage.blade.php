@@ -489,14 +489,14 @@
 </div>
 
      
-
+        
         <div class="col-md-12 col-xl-12">
-          <h5 class="mb-3">College Teams</h5>
+          <h5 class="mb-3">College Level Teams</h5>
           <div class="card tbl-card">
             <div class="card-body">
                <div class="d-flex mb-3">
                   <a href="#" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#addTeamOffcanvas">
-                      <i class="ti ti-users me-2"></i> Add Team
+                      <i class="ti ti-users me-2"></i> Add College Team
                   </a>
               </div>
               <!-- Add Team Offcanvas -->
