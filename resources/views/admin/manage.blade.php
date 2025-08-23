@@ -421,48 +421,72 @@
       <!-- [ Main Content ] start -->
       <div class="row">
         <!-- [ sample-page ] start -->
-        <div class="col-md-6 col-xl-3">
-          <div class="card">
-            <div class="card-body">
-              <h6 class="mb-2 f-w-400 text-muted">Total Page Views</h6>
-              <h4 class="mb-3">4,42,236 <span class="badge bg-light-primary border border-primary"><i
-                    class="ti ti-trending-up"></i> 59.3%</span></h4>
-              <p class="mb-0 text-muted text-sm">You made an extra <span class="text-primary">35,000</span> this year
-              </p>
-            </div>
-          </div>
+       <div class="col-md-6 col-xl-3">
+    <div class="card">
+        <div class="card-body">
+            <h6 class="mb-2 f-w-400 text-muted"  style="font-size: 11px;">Total College Teams</h6>
+            <h4 class="mb-3">
+                {{ $collegeTeams->count() }}
+                <span class="badge bg-light-primary border border-primary">
+                    <i class="ti ti-users"></i>
+                </span>
+            </h4>
+            <p class="mb-0 text-muted text-sm">
+                Gold Medals: <span class="text-primary">{{ $collegeTeams->sum('gold') }}</span>
+            </p>
         </div>
-        <div class="col-md-6 col-xl-3">
-          <div class="card">
-            <div class="card-body">
-              <h6 class="mb-2 f-w-400 text-muted">Total Users</h6>
-              <h4 class="mb-3">78,250 <span class="badge bg-light-success border border-success"><i
-                    class="ti ti-trending-up"></i> 70.5%</span></h4>
-              <p class="mb-0 text-muted text-sm">You made an extra <span class="text-success">8,900</span> this year</p>
-            </div>
-          </div>
+    </div>
+</div>
+<div class="col-md-6 col-xl-3">
+    <div class="card">
+        <div class="card-body">
+            <h6 class="mb-2 f-w-400 text-muted"  style="font-size: 11px;">Total Secondary Teams</h6>
+            <h4 class="mb-3">
+                {{ $secondaryTeams->count() }}
+                <span class="badge bg-light-success border border-success">
+                    <i class="ti ti-users"></i>
+                </span>
+            </h4>
+            <p class="mb-0 text-muted text-sm">
+                Gold Medals: <span class="text-success">{{ $secondaryTeams->sum('gold') }}</span>
+            </p>
         </div>
-        <div class="col-md-6 col-xl-3">
-          <div class="card">
-            <div class="card-body">
-              <h6 class="mb-2 f-w-400 text-muted">Total Order</h6>
-              <h4 class="mb-3">18,800 <span class="badge bg-light-warning border border-warning"><i
-                    class="ti ti-trending-down"></i> 27.4%</span></h4>
-              <p class="mb-0 text-muted text-sm">You made an extra <span class="text-warning">1,943</span> this year</p>
-            </div>
-          </div>
+    </div>
+</div>
+<div class="col-md-6 col-xl-3">
+    <div class="card">
+        <div class="card-body">
+            <h6 class="mb-2 f-w-400 text-muted" style="font-size: 11px;">Total College Silver & Bronze</h6>
+            <h4 class="mb-3">
+                {{ $collegeTeams->sum('silver') + $collegeTeams->sum('bronze') }}
+                <span class="badge bg-light-warning border border-warning">
+                    <i class="ti ti-medal"></i>
+                </span>
+            </h4>
+            <p class="mb-0 text-muted text-sm">
+                Silver: <span class="text-warning">{{ $collegeTeams->sum('silver') }}</span>,
+                Bronze: <span class="text-warning">{{ $collegeTeams->sum('bronze') }}</span>
+            </p>
         </div>
-        <div class="col-md-6 col-xl-3">
-          <div class="card">
-            <div class="card-body">
-              <h6 class="mb-2 f-w-400 text-muted">Total Sales</h6>
-              <h4 class="mb-3">$35,078 <span class="badge bg-light-danger border border-danger"><i
-                    class="ti ti-trending-down"></i> 27.4%</span></h4>
-              <p class="mb-0 text-muted text-sm">You made an extra <span class="text-danger">$20,395</span> this year
-              </p>
-            </div>
-          </div>
+    </div>
+</div>
+<div class="col-md-6 col-xl-3">
+    <div class="card">
+        <div class="card-body">
+            <h6 class="mb-2 f-w-400 text-muted"  style="font-size: 11px;">Total Secondary Silver & Bronze</h6>
+            <h4 class="mb-3">
+                {{ $secondaryTeams->sum('silver') + $secondaryTeams->sum('bronze') }}
+                <span class="badge bg-light-danger border border-danger">
+                    <i class="ti ti-medal"></i>
+                </span>
+            </h4>
+            <p class="mb-0 text-muted text-sm">
+                Silver: <span class="text-danger">{{ $secondaryTeams->sum('silver') }}</span>,
+                Bronze: <span class="text-danger">{{ $secondaryTeams->sum('bronze') }}</span>
+            </p>
         </div>
+    </div>
+</div>
 
      
 
@@ -928,161 +952,261 @@ document.getElementById('teamLogo').addEventListener('change', function(event) {
     </div>
 </div>
 
+          <div class="col-md-12 col-xl-8">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h5 class="mb-0">Medal Tally Overview</h5>
+      
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="bg-light rounded p-3 mb-2">
+                        <h6 class="mb-1 text-muted">Total College Teams</h6>
+                        <h4 class="mb-1">{{ $collegeTeams->count() }}</h4>
+                        <p class="mb-0 text-muted text-sm">
+                            Gold: <span class="text-primary">{{ $collegeTeams->sum('gold') }}</span>,
+                            Silver: <span class="text-warning">{{ $collegeTeams->sum('silver') }}</span>,
+                            Bronze: <span class="text-warning">{{ $collegeTeams->sum('bronze') }}</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-light rounded p-3 mb-2">
+                        <h6 class="mb-1 text-muted">Total Secondary Teams</h6>
+                        <h4 class="mb-1">{{ $secondaryTeams->count() }}</h4>
+                        <p class="mb-0 text-muted text-sm">
+                            Gold: <span class="text-success">{{ $secondaryTeams->sum('gold') }}</span>,
+                            Silver: <span class="text-danger">{{ $secondaryTeams->sum('silver') }}</span>,
+                            Bronze: <span class="text-danger">{{ $secondaryTeams->sum('bronze') }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="chart-tab-tabContent">
+                <div class="tab-pane" id="chart-tab-home" role="tabpanel" aria-labelledby="chart-tab-home-tab" tabindex="0">
+                    <div id="visitor-chart-1"></div>
+                </div>
+                <div class="tab-pane show active" id="chart-tab-profile" role="tabpanel" aria-labelledby="chart-tab-profile-tab" tabindex="0">
+                    <div id="visitor-chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                    <div class="col-md-12 col-xl-8">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                      <h5 class="mb-0">Unique Visitor</h5>
-                      <ul class="nav nav-pills justify-content-end mb-0" id="chart-tab-tab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                          <button class="nav-link" id="chart-tab-home-tab" data-bs-toggle="pill" data-bs-target="#chart-tab-home"
-                            type="button" role="tab" aria-controls="chart-tab-home" aria-selected="true">Month</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                          <button class="nav-link active" id="chart-tab-profile-tab" data-bs-toggle="pill"
-                            data-bs-target="#chart-tab-profile" type="button" role="tab" aria-controls="chart-tab-profile"
-                            aria-selected="false">Week</button>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="tab-content" id="chart-tab-tabContent">
-                          <div class="tab-pane" id="chart-tab-home" role="tabpanel" aria-labelledby="chart-tab-home-tab"
-                            tabindex="0">
-                            <div id="visitor-chart-1"></div>
-                          </div>
-                          <div class="tab-pane show active" id="chart-tab-profile" role="tabpanel"
-                            aria-labelledby="chart-tab-profile-tab" tabindex="0">
-                            <div id="visitor-chart"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12 col-xl-4">
-                    <h5 class="mb-3">Income Overview</h5>
-                    <div class="card">
-                      <div class="card-body">
-                        <h6 class="mb-2 f-w-400 text-muted">This Week Statistics</h6>
-                        <h3 class="mb-3">$7,650</h3>
-                        <div id="income-overview-chart"></div>
-                      </div>
-                    </div>
-                  </div>
+<!-- Pass PHP data to JS -->
+<script>
+window.collegeGold = {{ $collegeTeams->sum('gold') }};
+window.collegeSilver = {{ $collegeTeams->sum('silver') }};
+window.collegeBronze = {{ $collegeTeams->sum('bronze') }};
+window.secondaryGold = {{ $secondaryTeams->sum('gold') }};
+window.secondarySilver = {{ $secondaryTeams->sum('silver') }};
+window.secondaryBronze = {{ $secondaryTeams->sum('bronze') }};
+</script>
+
+<!-- ApexCharts CDN (if not already included) -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Bar chart for College vs Secondary medals
+    var options = {
+        chart: {
+            type: 'bar',
+            height: 300
+        },
+        series: [{
+            name: 'College',
+            data: [window.collegeGold, window.collegeSilver, window.collegeBronze]
+        }, {
+            name: 'Secondary',
+            data: [window.secondaryGold, window.secondarySilver, window.secondaryBronze]
+        }],
+        xaxis: {
+            categories: ['Gold', 'Silver', 'Bronze']
+        },
+        colors: ['#007bff', '#28a745'],
+        title: {
+            text: 'Medal Tally Overview'
+        }
+    };
+    var chart = new ApexCharts(document.querySelector("#visitor-chart"), options);
+    chart.render();
+
+    // Pie chart for total medals distribution
+    var pieOptions = {
+        chart: {
+            type: 'pie',
+            height: 300
+        },
+        series: [
+            window.collegeGold + window.secondaryGold,
+            window.collegeSilver + window.secondarySilver,
+            window.collegeBronze + window.secondaryBronze
+        ],
+        labels: ['Gold', 'Silver', 'Bronze'],
+        colors: ['#FFD700', '#C0C0C0', '#cd7f32'],
+        title: {
+            text: 'Total Medals Distribution'
+        }
+    };
+    var pieChart = new ApexCharts(document.querySelector("#visitor-chart-1"), pieOptions);
+    pieChart.render();
+});
+</script>
 
 
-                  <div class="col-md-12 col-xl-4">
-                    <h5 class="mb-3">Analytics Report</h5>
-                    <div class="card">
-                      <div class="list-group list-group-flush">
-                        <a href="#"
-                          class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">Company
-                          Finance Growth<span class="h5 mb-0">+45.14%</span></a>
-                        <a href="#"
-                          class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">Company
-                          Expenses Ratio<span class="h5 mb-0">0.58%</span></a>
-                        <a href="#"
-                          class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">Business
-                          Risk Cases<span class="h5 mb-0">Low</span></a>
-                      </div>
-                      <div class="card-body px-2">
-                        <div id="analytics-report-chart"></div>
-                      </div>
-                    </div>
-                  </div>
+                <div class="col-md-12 col-xl-4">
+    <h5 class="mb-3">Medal Overview</h5>
+    <div class="card">
+        <div class="card-body">
+            <h6 class="mb-2 f-w-400 text-muted">Medal Distribution</h6>
+            <h3 class="mb-3">
+                {{ $collegeTeams->sum('gold') + $secondaryTeams->sum('gold') + $collegeTeams->sum('silver') + $secondaryTeams->sum('silver') + $collegeTeams->sum('bronze') + $secondaryTeams->sum('bronze') }}
+            </h3>
+            <div id="income-overview-chart"></div>
+        </div>
+    </div>
+</div>
 
-                  <div class="col-md-12 col-xl-8">
-                    <h5 class="mb-3">Sales Report</h5>
-                    <div class="card">
-                      <div class="card-body">
-                        <h6 class="mb-2 f-w-400 text-muted">This Week Statistics</h6>
-                        <h3 class="mb-0">$7,650</h3>
-                        <div id="sales-report-chart"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12 col-xl-4">
-                    <h5 class="mb-3">Transaction History</h5>
-                    <div class="card">
-                      <div class="list-group list-group-flush">
-                        <a href="#" class="list-group-item list-group-item-action">
-                          <div class="d-flex">
-                            <div class="flex-shrink-0">
-                              <div class="avtar avtar-s rounded-circle text-success bg-light-success">
-                                <i class="ti ti-gift f-18"></i>
-                              </div>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                              <h6 class="mb-1">Order #002434</h6>
-                              <p class="mb-0 text-muted">Today, 2:00 AM</P>
-                            </div>
-                            <div class="flex-shrink-0 text-end">
-                              <h6 class="mb-1">+ $1,430</h6>
-                              <p class="mb-0 text-muted">78%</P>
-                            </div>
-                          </div>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                          <div class="d-flex">
-                            <div class="flex-shrink-0">
-                              <div class="avtar avtar-s rounded-circle text-primary bg-light-primary">
-                                <i class="ti ti-message-circle f-18"></i>
-                              </div>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                              <h6 class="mb-1">Order #984947</h6>
-                              <p class="mb-0 text-muted">5 August, 1:45 PM</P>
-                            </div>
-                            <div class="flex-shrink-0 text-end">
-                              <h6 class="mb-1">- $302</h6>
-                              <p class="mb-0 text-muted">8%</P>
-                            </div>
-                          </div>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                          <div class="d-flex">
-                            <div class="flex-shrink-0">
-                              <div class="avtar avtar-s rounded-circle text-danger bg-light-danger">
-                                <i class="ti ti-settings f-18"></i>
-                              </div>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                              <h6 class="mb-1">Order #988784</h6>
-                              <p class="mb-0 text-muted">7 hours ago</P>
-                            </div>
-                            <div class="flex-shrink-0 text-end">
-                              <h6 class="mb-1">- $682</h6>
-                              <p class="mb-0 text-muted">16%</P>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+<script>
+window.collegeGold = {{ $collegeTeams->sum('gold') }};
+window.collegeSilver = {{ $collegeTeams->sum('silver') }};
+window.collegeBronze = {{ $collegeTeams->sum('bronze') }};
+window.secondaryGold = {{ $secondaryTeams->sum('gold') }};
+window.secondarySilver = {{ $secondaryTeams->sum('silver') }};
+window.secondaryBronze = {{ $secondaryTeams->sum('bronze') }};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var pieOptions = {
+        chart: {
+            type: 'pie',
+            height: 300
+        },
+        series: [
+            window.collegeGold + window.secondaryGold,
+            window.collegeSilver + window.secondarySilver,
+            window.collegeBronze + window.secondaryBronze
+        ],
+        labels: ['Gold', 'Silver', 'Bronze'],
+        colors: ['#FFD700', '#C0C0C0', '#cd7f32'],
+        title: {
+            text: 'Total Medals Distribution'
+        }
+    };
+    var pieChart = new ApexCharts(document.querySelector("#income-overview-chart"), pieOptions);
+    pieChart.render();
+});
+</script>
+
+
+                 <div class="col-md-12 col-xl-12">
+    <h5 class="mb-3">Analytics Report</h5>
+    <div class="card">
+        <div class="list-group list-group-flush">
+            <div class="list-group-item d-flex align-items-center justify-content-between">
+                Total College Teams <span class="h5 mb-0">{{ $collegeTeams->count() }}</span>
+            </div>
+            <div class="list-group-item d-flex align-items-center justify-content-between">
+                Total Secondary Teams <span class="h5 mb-0">{{ $secondaryTeams->count() }}</span>
+            </div>
+            <div class="list-group-item d-flex align-items-center justify-content-between">
+                Total Gold Medals <span class="h5 mb-0">{{ $collegeTeams->sum('gold') + $secondaryTeams->sum('gold') }}</span>
+            </div>
+            <div class="list-group-item d-flex align-items-center justify-content-between">
+                Total Silver Medals <span class="h5 mb-0">{{ $collegeTeams->sum('silver') + $secondaryTeams->sum('silver') }}</span>
+            </div>
+            <div class="list-group-item d-flex align-items-center justify-content-between">
+                Total Bronze Medals <span class="h5 mb-0">{{ $collegeTeams->sum('bronze') + $secondaryTeams->sum('bronze') }}</span>
+            </div>
+        </div>
+        <div class="card-body px-2">
+            <div id="analytics-report-chart"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var analyticsOptions = {
+        chart: {
+            type: 'line',
+            height: 250
+        },
+        series: [
+            {
+                name: 'College Gold',
+                data: [window.collegeGold]
+            },
+            {
+                name: 'Secondary Gold',
+                data: [window.secondaryGold]
+            },
+            {
+                name: 'College Silver',
+                data: [window.collegeSilver]
+            },
+            {
+                name: 'Secondary Silver',
+                data: [window.secondarySilver]
+            },
+            {
+                name: 'College Bronze',
+                data: [window.collegeBronze]
+            },
+            {
+                name: 'Secondary Bronze',
+                data: [window.secondaryBronze]
+            }
+        ],
+        xaxis: {
+            categories: ['Medals']
+        },
+        colors: ['#007bff', '#28a745', '#FFC107', '#DC3545', '#cd7f32', '#6c757d'],
+        title: {
+            text: 'Analytics Report'
+        }
+    };
+    var analyticsChart = new ApexCharts(document.querySelector("#analytics-report-chart"), analyticsOptions);
+    analyticsChart.render();
+});
+</script>
+
+                  
+                
                 </div>
               </div>
             </div>
+
+
+            
+
+        
             <!-- [ Main Content ] end -->
-            <footer class="pc-footer">
-              <div class="footer-wrapper container-fluid">
+          <footer class="pc-footer">
+            <div class="footer-wrapper container-fluid">
                 <div class="row">
-                  <div class="col-sm my-1">
-                    <p class="m-0"
-                      >Mantis &#9829; crafted by Team <a href="https://themeforest.net/user/codedthemes" target="_blank">Codedthemes</a> Distributed by <a href="https://themewagon.com/">ThemeWagon</a>.</p
-                    >
-                  </div>
-                  <div class="col-auto my-1">
-                    <ul class="list-inline footer-link mb-0">
-                      <li class="list-inline-item"><a href="../index.html">Home</a></li>
-                    </ul>
-                  </div>
+                    <div class="col-sm my-1">
+                        <p class="m-0">
+                            Medal Tally System &copy; {{ date('Y') }} &mdash; Developed by <span class="fw-bold text-primary">programmerejie</span>.
+                            For support, email <a href="mailto:programmerejie@gmail.com" class="text-warning">programmerejie@gmail.com</a>.
+                        </p>
+                    </div>
+                    <div class="col-auto my-1">
+                        <ul class="list-inline footer-link mb-0">
+                            <li class="list-inline-item"><a href="{{ route('admin.manage') }}">Home</a></li>
+                            <li class="list-inline-item"><a href="mailto:programmerejie@gmail.com">Contact</a></li>
+                        </ul>
+                    </div>
                 </div>
-              </div>
-            </footer>
+            </div>
+        </footer>
 
   <!-- [Page Specific JS] start -->
-  <script src="{{ asset('template/admin/dist/assets/js/plugins/apexcharts.min.js') }}"></script>
-  <script src="{{ asset('template/admin/dist/assets/js/pages/dashboard-default.js') }}"></script>
+  {{-- <script src="{{ asset('template/admin/dist/assets/js/plugins/apexcharts.min.js') }}"></script>
+  <script src="{{ asset('template/admin/dist/assets/js/pages/dashboard-default.js') }}"></script> --}}
   <!-- [Page Specific JS] end -->
   <!-- Required Js -->
   <script src="{{ asset('template/admin/dist/assets/js/plugins/popper.min.js') }}"></script>
