@@ -62,7 +62,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="#about">Get Started</a>
+      <a class="btn-getstarted" href="{{route('admin.manage')}}">Admin</a>
 
     </div>
   </header>
@@ -133,7 +133,7 @@
         <h2><i class="bi bi-trophy-fill text-warning me-2"></i>Medal Tally Board</h2>
         <p>Live ranking and medal tally for College and Secondary teams.</p>
     </div>
-    <div class="container">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row gy-4">
             <div class="col-lg-12" data-aos="fade-up" data-aos-delay="100">
                 <h4 class="mb-3 fw-bold text-primary"><i class="bi bi-mortarboard-fill me-2"></i>College Level Teams</h4>
