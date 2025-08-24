@@ -7,14 +7,21 @@ use App\Models\CollegeTeam;
 use App\Models\SecondaryTeam;
 
 Route::get('/', function () {
-    return view('admin.manage');
-});
-
+    $collegeTeams = CollegeTeam::orderByDesc('gold')
+        ->orderByDesc('silver')
+        ->orderByDesc('bronze')
+        ->get();
+    $secondaryTeams = SecondaryTeam::orderByDesc('gold')
+        ->orderByDesc('silver')
+        ->orderByDesc('bronze')
+        ->get();
+    return view('index', compact('collegeTeams', 'secondaryTeams'));
+})->name('home');
 
 
 // College routes
 Route::get('/admin/manage', function () {
-    $collegeTeams = \App\Models\CollegeTeam::orderByDesc('gold')
+    $collegeTeams = CollegeTeam::orderByDesc('gold')
         ->orderByDesc('silver')
         ->orderByDesc('bronze')
         ->get();
