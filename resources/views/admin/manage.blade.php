@@ -312,7 +312,7 @@
               <h6 class="mb-1">Administrator</h6>
               <span>Sports Coordinator</span>
             </div>
-            <a href="{{route('home')}}" class="pc-head-link bg-transparent"><i class="ti ti-power text-danger"></i></a>
+            <a href="{{route('logout')}}" class="pc-head-link bg-transparent"><i class="ti ti-power text-danger"></i></a>
           </div>
         </div>
         <ul class="nav drp-tabs nav-fill nav-tabs" id="mydrpTab" role="tablist">

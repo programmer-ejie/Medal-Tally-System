@@ -56,13 +56,13 @@
     <li><a href="#hero" class="active">Home</a></li>
     <li><a href="#medalRanking">Medal Tally Board</a></li>
      <li><a href="#services">Services</a></li>
-    <li><a href="#about-alt">About Us</a></li>
+    {{-- <li><a href="#about-alt">About Us</a></li> --}}
     <li><a href="#contact">Contact</a></li>
 </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="{{route('admin.manage')}}">Admin</a>
+      <a class="btn-getstarted" href="#login_box">Admin Login</a>
 
     </div>
   </header>
@@ -139,7 +139,7 @@
                 <h4 class="mb-3 fw-bold text-primary"><i class="bi bi-mortarboard-fill me-2"></i>College Level Teams</h4>
                 <div class="table-responsive mb-5">
                     <table class="table table-hover table-striped align-middle mb-0">
-                        <thead class="table-dark">
+                        <thead class="table-secondary">
                             <tr>
                                 <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-trophy-fill text-warning"></i> RANK</th>
                                 <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-image"></i> LOGO</th>
@@ -190,10 +190,10 @@
                 </div>
             </div>
             <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
-                <h4 class="mb-3 fw-bold text-success"><i class="bi bi-book-fill me-2"></i>Secondary Level Teams</h4>
+                <h4 class="mb-3 fw-bold text-primary"><i class="bi bi-mortarboard-fill me-2"></i>Secondary Level Teams</h4>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped align-middle mb-0">
-                        <thead class="table-dark">
+                        <thead class="table-secondary">
                             <tr>
                                 <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-trophy-fill text-warning"></i> RANK</th>
                                 <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-image"></i> LOGO</th>
@@ -384,28 +384,47 @@
 
 
 <!-- About Alt Section -->
-<section id="about-alt" class="about-alt section" data-aos="fade-up" data-aos-delay="100">
+<section id="login_box" class="about-alt section" data-aos="fade-up" data-aos-delay="100">
   <div class="container">
     <div class="row gy-4">
       <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="100">
         <img src="{{ asset('images/slsu_logo.jpeg') }}" class="img-fluid rounded shadow" alt="About Medal Tally" style = "padding: 40px;">
         <a href="" class="glightbox pulsating-play-btn" aria-label="Watch Video"></a>
       </div>
-      <div class="col-lg-6 content d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
-        <h3 class="fw-bold mb-3"><i class="bi bi-info-circle text-primary me-2"></i>About the Medal Tally System</h3>
-        <p class="fst-italic mb-3">
-          The Medal Tally System is designed to track, rank, and celebrate the achievements of every team in real time. It provides a transparent and engaging way to view medal standings for both College and Secondary levels.
-        </p>
-        <ul class="list-unstyled mb-3">
-          <li class="mb-2"><i class="bi bi-check2-all text-success me-2"></i> <span>Live medal ranking for all teams.</span></li>
-          <li class="mb-2"><i class="bi bi-check2-all text-success me-2"></i> <span>Easy-to-use interface for students and staff.</span></li>
-          <li class="mb-2"><i class="bi bi-check2-all text-success me-2"></i> <span>Celebrates excellence and sportsmanship across departments.</span></li>
-        </ul>
-        <p>
-          Our goal is to foster healthy competition and recognize outstanding performance. Stay updated and cheer for your favorite teams as they strive for gold, silver, and bronze!
-        </p>
+    <div class="col-lg-6 d-flex justify-content-center align-items-center">
+  <div class="content w-100 border shadow rounded p-4 text-center" data-aos="fade-up" data-aos-delay="200" style="max-width: 450px; background-color: #fff;">
+    
+    <h3 class="fw-bold mb-3">
+      <i class="bi bi-person-circle text-primary me-2"></i>Login
+    </h3>
+    
+    <p class="fst-italic mb-3">
+      Please log in with your registered credentials to access the Medal Tally System. 
+      Only authorized students, faculty, and staff are allowed to manage and view medal standings.
+    </p>
+    
+    <form method="POST" action="{{ route('login.process') }}">
+      @csrf
+      <div class="mb-3 text-start">
+        <label for="username" class="form-label fw-bold">Username</label>
+        <input type="text" name = "username" class="form-control" id="username" placeholder="Enter your username">
       </div>
-    </div>
+      <div class="mb-3 text-start">
+        <label for="password" class="form-label fw-bold">Password</label>
+        <input type="password" name = "password" class="form-control" id="password" placeholder="Enter your password">
+      </div>
+      <button type="submit" class="btn btn-primary w-100">
+        <i class="bi bi-box-arrow-in-right me-2"></i>Login
+      </button>
+    </form>
+
+    <p class="mt-3 text-muted small">
+      Don’t have an account? Contact our <a href="#">Sports Coordinator</a> to request access.
+    </p>
+
+  </div>
+</div>
+
   </div>
 </section><!-- /About Alt Section -->
 
