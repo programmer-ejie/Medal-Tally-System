@@ -488,7 +488,240 @@
     </div>
 </div>
 
-     
+     <div class="col-md-12 col-xl-12 mt-5">
+    <h5 class="mb-3">Faculty & Staff Teams</h5>
+    <div class="card tbl-card">
+        <div class="card-body">
+            <div class="d-flex mb-3">
+                <a href="#" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#addFacultyTeamOffcanvas">
+                    <i class="ti ti-users me-2"></i> Add Faculty/Staff Team
+                </a>
+            </div>
+            <!-- Add Faculty/Staff Team Offcanvas -->
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="addFacultyTeamOffcanvas" aria-labelledby="addFacultyTeamOffcanvasLabel">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="offcanvas-title fw-bold text-warning" id="addFacultyTeamOffcanvasLabel">
+                        <i class="ti ti-users me-2"></i> Add Team
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body px-4 py-3">
+                    <form method="POST" action="{{ route('admin.facultySaveTeam') }}" class="needs-validation" enctype="multipart/form-data" novalidate>
+                        @csrf
+                        <div class="mb-3 text-center">
+                            <!-- Display selected logo preview or default logo -->
+                            <img id="facultyLogoPreview" src="{{ asset('images/default_team_logo.webp') }}" alt="Team Logo Preview" width="150" height="150" class="rounded-circle mb-2 shadow-sm" style="object-fit: cover; border: 2px solid grey;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="facultyTeamLogo" class="form-label fw-semibold">Logo</label>
+                            <input type="file" class="form-control shadow-sm" id="facultyTeamLogo" name="logo" accept="image/*" required>
+                            <div class="invalid-feedback">Please upload a team logo.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="facultyTeamName" class="form-label fw-semibold">Team Name</label>
+                            <input type="text" class="form-control shadow-sm" id="facultyTeamName" name="team_name" placeholder="Enter team name" required>
+                            <div class="invalid-feedback">Please enter the team name.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="facultyAltName" class="form-label fw-semibold">Alt Name</label>
+                            <input type="text" class="form-control shadow-sm" id="facultyAltName" name="alt_name" placeholder="Enter alternate name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="facultyDepartment" class="form-label fw-semibold">Department</label>
+                            <input type="text" class="form-control shadow-sm" id="facultyDepartment" name="department" placeholder="Enter department" required>
+                            <div class="invalid-feedback">Please enter the department.</div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-m shadow">
+                                <i class="ti ti-plus me-1"></i> Submit Team
+                            </button>
+                        </div>
+                    </form>
+
+                    <script>
+                        document.getElementById('facultyTeamLogo').addEventListener('change', function(event) {
+                            const [file] = event.target.files;
+                            const preview = document.getElementById('facultyLogoPreview');
+                            if (file) {
+                                preview.src = URL.createObjectURL(file);
+                            } else {
+                                preview.src = "{{ asset('images/default_team_logo.webp') }}";
+                            }
+                        });
+                    </script>
+                    <div class="alert alert-info mt-4" style="font-size: 0.95rem;">
+                        <i class="ti ti-info-circle me-2"></i>
+                        <b>Tip:</b> Please ensure all team details are correct before submitting.
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0">
+                    <thead>
+                        <tr class="table-secondary">
+                            <th>RANK</th>
+                            <th>LOGO</th>
+                            <th>TEAM NAME</th>
+                            <th>DEPARTMENT</th>
+                            <th>GOLD</th>
+                            <th>SILVER</th>
+                            <th>BRONZE</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($facultyTeams as $team)
+                        <tr>
+                            <td>
+                                <span class="d-inline-flex align-items-center justify-content-center rounded-circle shadow-sm"
+                                    style="background: linear-gradient(90deg, #e9ecef 60%, #f8f9fa 100%); width: 38px; height: 38px; font-weight: bold; margin: 10px; font-size: 1.2rem; border: 2px solid #C0C0C0;">
+                                    <i class="ti ti-crown me-1" style="color: #C0C0C0; font-size: 14px;"></i> {{ $loop->iteration }}
+                                </span>
+                            </td>
+                            <td>
+                                <img src="{{ $team->logo ? asset($team->logo) : asset('assets/images/teams/default.png') }}"
+                                    alt="{{ $team->team_name }} Logo" width="40" height="40" class="rounded-circle">
+                            </td>
+                            <td>{{ $team->team_name }}</td>
+                            <td>{{ $team->department }}</td>
+                            <td>
+                                <span class="d-inline-flex align-items-center px-3 py-1 rounded-pill shadow-sm"
+                                    style="background: linear-gradient(90deg, #ffe066 60%, #fffbe6 100%); color: #bfa100; font-weight: 600; font-size: 1rem;">
+                                    <i class="ti ti-medal me-1"></i> {{ $team->gold }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="d-inline-flex align-items-center px-3 py-1 rounded-pill shadow-sm"
+                                    style="background: linear-gradient(90deg, #e9ecef 60%, #f8f9fa 100%); color: #7d7d7d; font-weight: 600; font-size: 1rem;">
+                                    <i class="ti ti-medal me-1"></i> {{ $team->silver }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="d-inline-flex align-items-center px-3 py-1 rounded-pill shadow-sm"
+                                    style="background: linear-gradient(90deg, #ffe5b4 60%, #fff8e1 100%); color: #a97142; font-weight: 600; font-size: 1rem;">
+                                    <i class="ti ti-medal me-1"></i> {{ $team->bronze }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-outline-primary btn-sm" data-bs-toggle="offcanvas" data-bs-target="#editFacultyTeam{{ $team->id }}" title="Edit">
+                                    <i class="ti ti-edit"></i>
+                                </a>
+                                <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="offcanvas" data-bs-target="#deleteFacultyTeam{{ $team->id }}" title="Delete">
+                                    <i class="ti ti-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- Edit Faculty/Staff Team Offcanvas -->
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="editFacultyTeam{{ $team->id }}" aria-labelledby="editFacultyTeamLabel{{ $team->id }}">
+                            <div class="offcanvas-header border-bottom">
+                                <h5 class="offcanvas-title text-success" id="editFacultyTeamLabel{{ $team->id }}">
+                                    <i class="ti ti-edit me-2"></i> Edit Team
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body px-4 py-3">
+                                <form method="POST" action="{{ route('admin.facultyTeam.update', $team->id) }}" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="mb-3 text-center">
+                                        <img id="editFacultyLogoPreview{{ $team->id }}"
+                                            src="{{ $team->logo ? asset($team->logo) : asset('assets/images/teams/default.png') }}"
+                                            alt="Logo" width="150" height="150"
+                                            class="rounded-circle mb-2 shadow-sm"
+                                            style="object-fit: cover; border: 2px solid grey;">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Logo</label>
+                                        <input type="file" class="form-control" name="logo" id="editFacultyTeamLogo{{ $team->id }}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Team Name</label>
+                                        <input type="text" class="form-control" name="team_name" value="{{ $team->team_name }}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Alt Name</label>
+                                        <input type="text" class="form-control" name="alt_name" value="{{ $team->alt_name }}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Department</label>
+                                        <input type="text" class="form-control" name="department" value="{{ $team->department }}" required>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <label class="form-label fw-semibold">Gold</label>
+                                            <input type="number" class="form-control" name="gold" min="0" value="{{ $team->gold }}" required>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label fw-semibold">Silver</label>
+                                            <input type="number" class="form-control" name="silver" min="0" value="{{ $team->silver }}" required>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label fw-semibold">Bronze</label>
+                                            <input type="number" class="form-control" name="bronze" min="0" value="{{ $team->bronze }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="ti ti-check me-1"></i> Save Changes
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <script>
+                                    document.getElementById('editFacultyTeamLogo{{ $team->id }}').addEventListener('change', function(event) {
+                                        const [file] = event.target.files;
+                                        const preview = document.getElementById('editFacultyLogoPreview{{ $team->id }}');
+                                        if (file) {
+                                            preview.src = URL.createObjectURL(file);
+                                        }
+                                    });
+                                </script>
+                                <div class="alert alert-info mt-4" style="font-size: 0.95rem;">
+                                    <i class="ti ti-info-circle me-2"></i>
+                                    <b>Edit Tip:</b> You can update all team details. Double-check before saving changes.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Delete Faculty/Staff Team Offcanvas -->
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="deleteFacultyTeam{{ $team->id }}" aria-labelledby="deleteFacultyTeamLabel{{ $team->id }}">
+                            <div class="offcanvas-header border-bottom">
+                                <h5 class="offcanvas-title text-danger" id="deleteFacultyTeamLabel{{ $team->id }}">
+                                    <i class="ti ti-trash me-2"></i> Confirm Team Deletion
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body d-flex flex-column justify-content-center text-center" style="min-height: 300px;">
+                                <div class="mb-4">
+                                    <div class="text-danger mb-2">
+                                        <i class="ti ti-alert-triangle" style="font-size: 3rem;"></i>
+                                    </div>
+                                    <p class="fs-5 mb-1">Are you sure you want to delete this team?</p>
+                                    <p class="text-muted small">This action cannot be undone.</p>
+                                </div>
+                                <form method="POST" action="{{ route('admin.facultyTeam.delete', $team->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="ti ti-trash me-1"></i> Yes, Delete Team
+                                        </button>
+                                        <button type="button" class="btn btn-light border" data-bs-dismiss="offcanvas">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
         
         <div class="col-md-12 col-xl-12">
           <h5 class="mb-3">College Level Teams</h5>

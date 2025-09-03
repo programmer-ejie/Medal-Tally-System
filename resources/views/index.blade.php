@@ -85,7 +85,7 @@
     <a href="#medalRanking" class="btn-get-started">View Ranking</a>
 </div>
 
-       <div class="row gy-4 mt-5">
+    <div class="row gy-4 mt-5">
     <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="100">
         <div class="icon-box">
             <div class="icon"><i class="bi bi-trophy"></i></div>
@@ -102,11 +102,21 @@
         </div>
     </div><!--End Icon Box-->
 
+    <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="250">
+        <div class="icon-box">
+            <div class="icon"><i class="bi bi-people-fill"></i></div>
+            <h4 class="title"><a href="{{ route('admin.manage') }}">Total Faculty & Staff Teams</a></h4>
+            <p class="description">{{ $facultyTeams->count() }} teams competing at the faculty & staff level.</p>
+        </div>
+    </div><!--End Icon Box-->
+
     <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="300">
         <div class="icon-box"> 
              <div class="icon"><i class="bi bi-award"></i></div>
             <h4 class="title"><a href="{{ route('admin.manage') }}">Total Gold Medals</a></h4>
-            <p class="description">{{ $collegeTeams->sum('gold') + $secondaryTeams->sum('gold') }} gold medals awarded so far.</p>
+            <p class="description">
+                {{ $collegeTeams->sum('gold') + $secondaryTeams->sum('gold') + $facultyTeams->sum('gold') }} gold medals awarded so far.
+            </p>
         </div>
     </div><!--End Icon Box-->
 
@@ -115,12 +125,13 @@
             <div class="icon"><i class="bi bi-award"></i></div>
             <h4 class="title"><a href="{{ route('admin.manage') }}">Total Silver & Bronze</a></h4>
             <p class="description">
-                {{ $collegeTeams->sum('silver') + $secondaryTeams->sum('silver') }} silver &amp;
-                {{ $collegeTeams->sum('bronze') + $secondaryTeams->sum('bronze') }} bronze medals awarded.
+                {{ $collegeTeams->sum('silver') + $secondaryTeams->sum('silver') + $facultyTeams->sum('silver') }} silver &amp;
+                {{ $collegeTeams->sum('bronze') + $secondaryTeams->sum('bronze') + $facultyTeams->sum('bronze') }} bronze medals awarded.
             </p>
         </div>
     </div><!--End Icon Box-->
 </div>
+
 
         </div>
       </div>
@@ -135,19 +146,75 @@
     </div>
     <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row gy-4">
+          <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
+    <h4 class="mb-3 fw-bold text-primary"><i class="bi bi-people-fill me-2"></i>Faculty & Staff Teams</h4>
+    <div class="table-responsive mb-5">
+        <table class="table table-hover table-striped align-middle mb-0">
+            <thead class="table-secondary">
+                <tr>
+                    <th class="text-center text-nowrap py-3 px-2"> RANK</th>
+                    <th class="text-center text-nowrap py-3 px-2"> LOGO</th>
+                    <th class="text-center text-nowrap py-3 px-2"> TEAM NAME</th>
+                    <th class="text-center text-nowrap py-3 px-2"> DEPARTMENT</th>
+                    <th class="text-center text-nowrap py-3 px-2"> GOLD</th>
+                    <th class="text-center text-nowrap py-3 px-2"> SILVER</th>
+                    <th class="text-center text-nowrap py-3 px-2"> BRONZE</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($facultyTeams as $team)
+                <tr>
+                    <td class="text-center align-middle text-nowrap py-2 px-2">
+                        <span class="d-inline-flex align-items-center justify-content-center rounded-circle shadow-sm"
+                            style="background: linear-gradient(90deg, #e9ecef 60%, #f8f9fa 100%); width: 44px; height: 44px; font-weight: bold; font-size: 1.2rem; border: 2px solid #C0C0C0; padding: 6px;">
+                            <i class="bi bi-trophy-fill me-1 text-warning" style="font-size: 1.3rem;"></i> {{ $loop->iteration }}
+                        </span>
+                    </td>
+                    <td class="text-center align-middle text-nowrap py-2 px-2">
+                        <img src="{{ $team->logo ? asset($team->logo) : asset('assets/images/teams/default.png') }}"
+                            alt="{{ $team->team_name }} Logo" width="40" height="40" class="rounded-circle border border-2">
+                    </td>
+                    <td class="text-center align-middle text-nowrap py-2 px-2">{{ $team->team_name }}</td>
+                    <td class="text-center align-middle text-nowrap py-2 px-2">{{ $team->department }}</td>
+                    <td class="text-center align-middle text-nowrap py-2 px-2">
+                        <span class="d-inline-flex align-items-center px-3 py-1 rounded-pill shadow-sm"
+                            style="background: linear-gradient(90deg, #ffe066 60%, #fffbe6 100%); color: #bfa100; font-weight: 600;">
+                            <i class="bi bi-award me-1 text-secondary"></i> {{ $team->gold }}
+                        </span>
+                    </td>
+                    <td class="text-center align-middle text-nowrap py-2 px-2">
+                        <span class="d-inline-flex align-items-center px-3 py-1 rounded-pill shadow-sm"
+                            style="background: linear-gradient(90deg, #e9ecef 60%, #f8f9fa 100%); color: #7d7d7d; font-weight: 600;">
+                            <i class="bi bi-award me-1 text-secondary"></i> {{ $team->silver }}
+                        </span>
+                    </td>
+                    <td class="text-center align-middle text-nowrap py-2 px-2">
+                        <span class="d-inline-flex align-items-center px-3 py-1 rounded-pill shadow-sm"
+                            style="background: linear-gradient(90deg, #ffe5b4 60%, #fff8e1 100%); color: #a97142; font-weight: 600;">
+                            <i class="bi bi-award me-1" style="color: #cd7f32;"></i> {{ $team->bronze }}
+                        </span>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
             <div class="col-lg-12" data-aos="fade-up" data-aos-delay="100">
                 <h4 class="mb-3 fw-bold text-primary"><i class="bi bi-mortarboard-fill me-2"></i>College Level Teams</h4>
                 <div class="table-responsive mb-5">
                     <table class="table table-hover table-striped align-middle mb-0">
                         <thead class="table-secondary">
                             <tr>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-trophy-fill text-warning"></i> RANK</th>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-image"></i> LOGO</th>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-people-fill"></i> TEAM NAME</th>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-building"></i> DEPARTMENT</th>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-award text-warning"></i> GOLD</th>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-award text-secondary"></i> SILVER</th>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-award" style="color: #cd7f32;"></i> BRONZE</th>
+                                <th class="text-center text-nowrap py-3 px-2"> RANK</th>
+                                <th class="text-center text-nowrap py-3 px-2"> LOGO</th>
+                                <th class="text-center text-nowrap py-3 px-2"> TEAM NAME</th>
+                                <th class="text-center text-nowrap py-3 px-2"> DEPARTMENT</th>
+                                <th class="text-center text-nowrap py-3 px-2"> GOLD</th>
+                                <th class="text-center text-nowrap py-3 px-2"> SILVER</th>
+                                <th class="text-center text-nowrap py-3 px-2"> BRONZE</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -196,13 +263,13 @@
                     <table class="table table-hover table-striped align-middle mb-0">
                         <thead class="table-secondary">
                             <tr>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-trophy-fill text-warning"></i> RANK</th>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-image"></i> LOGO</th>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-people-fill"></i> TEAM NAME</th>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-building"></i> DEPARTMENT</th>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-award text-warning"></i> GOLD</th>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-award text-secondary"></i> SILVER</th>
-                                <th class="text-center text-nowrap py-3 px-2"><i class="bi bi-award" style="color: #cd7f32;"></i> BRONZE</th>
+                                <th class="text-center text-nowrap py-3 px-2"> RANK</th>
+                                <th class="text-center text-nowrap py-3 px-2"> LOGO</th>
+                                <th class="text-center text-nowrap py-3 px-2"> TEAM NAME</th>
+                                <th class="text-center text-nowrap py-3 px-2"> DEPARTMENT</th>
+                                <th class="text-center text-nowrap py-3 px-2"> GOLD</th>
+                                <th class="text-center text-nowrap py-3 px-2"> SILVER</th>
+                                <th class="text-center text-nowrap py-3 px-2"> BRONZE</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -251,35 +318,47 @@
 
 <!-- /medalRanking Section -->
 
-  <!-- Stats Section -->
+<!-- Stats Section -->
 <section id="stats" class="stats section light-background" data-aos="fade-up" data-aos-delay="100">
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="row gy-4">
 
       <div class="col-lg-3 col-md-6">
         <div class="stats-item text-center w-100 h-100">
-          <span data-purecounter-start="0" data-purecounter-end="{{ $collegeTeams->count() + $secondaryTeams->count() }}" data-purecounter-duration="1" class="purecounter"></span>
+          <span data-purecounter-start="0" 
+                data-purecounter-end="{{ $collegeTeams->count() + $secondaryTeams->count() + $facultyTeams->count() }}" 
+                data-purecounter-duration="1" 
+                class="purecounter"></span>
           <p>Total Teams</p>
         </div>
       </div><!-- End Stats Item -->
 
       <div class="col-lg-3 col-md-6">
         <div class="stats-item text-center w-100 h-100">
-          <span data-purecounter-start="0" data-purecounter-end="{{ $collegeTeams->sum('gold') + $secondaryTeams->sum('gold') }}" data-purecounter-duration="1" class="purecounter"></span>
+          <span data-purecounter-start="0" 
+                data-purecounter-end="{{ $collegeTeams->sum('gold') + $secondaryTeams->sum('gold') + $facultyTeams->sum('gold') }}" 
+                data-purecounter-duration="1" 
+                class="purecounter"></span>
           <p>Gold Medals</p>
         </div>
       </div><!-- End Stats Item -->
 
       <div class="col-lg-3 col-md-6">
         <div class="stats-item text-center w-100 h-100">
-          <span data-purecounter-start="0" data-purecounter-end="{{ $collegeTeams->sum('silver') + $secondaryTeams->sum('silver') }}" data-purecounter-duration="1" class="purecounter"></span>
+          <span data-purecounter-start="0" 
+                data-purecounter-end="{{ $collegeTeams->sum('silver') + $secondaryTeams->sum('silver') + $facultyTeams->sum('silver') }}" 
+                data-purecounter-duration="1" 
+                class="purecounter"></span>
           <p>Silver Medals</p>
         </div>
       </div><!-- End Stats Item -->
 
       <div class="col-lg-3 col-md-6">
         <div class="stats-item text-center w-100 h-100">
-          <span data-purecounter-start="0" data-purecounter-end="{{ $collegeTeams->sum('bronze') + $secondaryTeams->sum('bronze') }}" data-purecounter-duration="1" class="purecounter"></span>
+          <span data-purecounter-start="0" 
+                data-purecounter-end="{{ $collegeTeams->sum('bronze') + $secondaryTeams->sum('bronze') + $facultyTeams->sum('bronze') }}" 
+                data-purecounter-duration="1" 
+                class="purecounter"></span>
           <p>Bronze Medals</p>
         </div>
       </div><!-- End Stats Item -->
@@ -287,6 +366,7 @@
     </div>
   </div>
 </section><!-- /Stats Section -->
+
 
 
 
@@ -411,10 +491,33 @@
         <label for="username" class="form-label fw-bold">Username</label>
         <input type="text" name = "username" class="form-control" id="username" placeholder="Enter your username">
       </div>
-      <div class="mb-3 text-start">
-        <label for="password" class="form-label fw-bold">Password</label>
-        <input type="password" name = "password" class="form-control" id="password" placeholder="Enter your password">
-      </div>
+    <div class="mb-3 text-start">
+  <label for="password" class="form-label fw-bold">Password</label>
+  <div class="input-group">
+    <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password">
+    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+      <i class="bi bi-eye-fill" id="toggleIcon"></i>
+    </button>
+  </div>
+</div>
+
+<script>
+  document.getElementById('togglePassword').addEventListener('click', function () {
+    const passwordField = document.getElementById('password');
+    const toggleIcon = document.getElementById('toggleIcon');
+    
+    if (passwordField.type === 'password') {
+      passwordField.type = 'text';
+      toggleIcon.classList.remove('bi-eye-fill');
+      toggleIcon.classList.add('bi-eye-slash-fill');
+    } else {
+      passwordField.type = 'password';
+      toggleIcon.classList.remove('bi-eye-slash-fill');
+      toggleIcon.classList.add('bi-eye-fill');
+    }
+  });
+</script>
+
       <button type="submit" class="btn btn-primary w-100">
         <i class="bi bi-box-arrow-in-right me-2"></i>Login
       </button>

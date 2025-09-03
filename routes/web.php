@@ -3,10 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\SecondaryController;
+use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\AuthController;
 use App\Models\CollegeTeam;
 use App\Models\SecondaryTeam;
-use App\Http\Controllers\AuthController;
-
+use App\Models\FacultyTeam;
 
 
 // Public routes
@@ -20,12 +21,20 @@ Route::get('/', function () {
         ->orderByDesc('silver')
         ->orderByDesc('bronze')
         ->get();
+
     $secondaryTeams = SecondaryTeam::orderByDesc('gold')
         ->orderByDesc('silver')
         ->orderByDesc('bronze')
         ->get();
-    return view('index', compact('collegeTeams', 'secondaryTeams'));
+
+    $facultyTeams = FacultyTeam::orderByDesc('gold')
+        ->orderByDesc('silver')
+        ->orderByDesc('bronze')
+        ->get();
+
+    return view('index', compact('collegeTeams', 'secondaryTeams', 'facultyTeams'));
 })->name('home');
+
 Route::post('/login', [AuthController::class, 'processLogin'])->name('login.process');
 
 
@@ -43,11 +52,18 @@ Route::middleware(['admin'])->group(function () {
             ->orderByDesc('silver')
             ->orderByDesc('bronze')
             ->get();
+
         $secondaryTeams = SecondaryTeam::orderByDesc('gold')
             ->orderByDesc('silver')
             ->orderByDesc('bronze')
             ->get();
-        return view('admin.manage', compact('collegeTeams', 'secondaryTeams'));
+
+        $facultyTeams = FacultyTeam::orderByDesc('gold')
+            ->orderByDesc('silver')
+            ->orderByDesc('bronze')
+            ->get();
+
+        return view('admin.manage', compact('collegeTeams', 'secondaryTeams', 'facultyTeams'));
     })->name('admin.manage');
 
     // College routes
@@ -65,4 +81,12 @@ Route::middleware(['admin'])->group(function () {
         ->name('admin.secondaryTeam.update');
     Route::delete('/admin/secondary-team/{id}', [SecondaryController::class, 'destroy'])
         ->name('admin.secondaryTeam.delete');
+
+    // Faculty routes
+    Route::post('/admin/faculty-save-team', [FacultyController::class, 'store'])
+        ->name('admin.facultySaveTeam');
+    Route::put('/admin/faculty-team/{id}', [FacultyController::class, 'update'])
+        ->name('admin.facultyTeam.update');
+    Route::delete('/admin/faculty-team/{id}', [FacultyController::class, 'destroy'])
+        ->name('admin.facultyTeam.delete');
 });
