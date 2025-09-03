@@ -18,7 +18,10 @@ class SecondaryController extends Controller
 
         $logoPath = null;
         if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('college_teams', 'public');
+            // Save file into public/college_teams
+            $fileName = time() . '_' . $request->file('logo')->getClientOriginalName();
+            $request->file('logo')->move(public_path('college_teams'), $fileName);
+            $logoPath = 'college_teams/' . $fileName; // relative path for DB
         }
 
         SecondaryTeam::create([
@@ -31,7 +34,7 @@ class SecondaryController extends Controller
         return redirect()->back()->with('success', 'Team added successfully!');
     }
 
-     public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $team = SecondaryTeam::findOrFail($id);
 
@@ -47,7 +50,14 @@ class SecondaryController extends Controller
 
         $logoPath = $team->logo;
         if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('college_teams', 'public');
+            // Optionally delete old logo file
+            if ($logoPath && file_exists(public_path($logoPath))) {
+                unlink(public_path($logoPath));
+            }
+
+            $fileName = time() . '_' . $request->file('logo')->getClientOriginalName();
+            $request->file('logo')->move(public_path('college_teams'), $fileName);
+            $logoPath = 'college_teams/' . $fileName;
         }
 
         $team->update([
@@ -63,9 +73,15 @@ class SecondaryController extends Controller
         return redirect()->back()->with('success', 'Team updated successfully!');
     }
 
-     public function destroy($id)
+    public function destroy($id)
     {
         $team = SecondaryTeam::findOrFail($id);
+
+        // delete logo file if it exists
+        if ($team->logo && file_exists(public_path($team->logo))) {
+            unlink(public_path($team->logo));
+        }
+
         $team->delete();
 
         return redirect()->back()->with('success', 'Team deleted successfully!');

@@ -580,10 +580,11 @@ document.getElementById('teamLogo').addEventListener('change', function(event) {
                               <i class="ti ti-crown me-1" style="color: #C0C0C0; font-size: 14px;;"></i> {{ $loop->iteration }}
                           </span>
                       </td>
-                      <td>
-                          <img src="{{ $team->logo ? asset('storage/' . $team->logo) : asset('assets/images/teams/default.png') }}"
-                              alt="{{ $team->team_name }} Logo" width="40" height="40" class="rounded-circle">
-                      </td>
+                    <td>
+                      <img src="{{ $team->logo ? asset($team->logo) : asset('assets/images/teams/default.png') }}"
+                          alt="{{ $team->team_name }} Logo" width="40" height="40" class="rounded-circle">
+                  </td>
+
                       <td>{{ $team->team_name }}</td>
                       <td>{{ $team->department }}</td>
                       <td>
@@ -626,9 +627,13 @@ document.getElementById('teamLogo').addEventListener('change', function(event) {
                           <form method="POST" action="{{ route('admin.collegeTeam.update', $team->id) }}" enctype="multipart/form-data">
                               @csrf
                               @method('PUT')
-                              <div class="mb-3 text-center">
+                             <div class="mb-3 text-center">
                                   <!-- Display current logo or default logo, and preview selected logo -->
-                                  <img id="editLogoPreview{{ $team->id }}" src="{{ $team->logo ? asset('storage/' . $team->logo) : asset('assets/images/teams/default.png') }}" alt="Logo" width="150" height="150" class="rounded-circle mb-2 shadow-sm" style="object-fit: cover; border: 2px solid grey;">
+                                  <img id="editLogoPreview{{ $team->id }}"
+                                      src="{{ $team->logo ? asset($team->logo) : asset('assets/images/teams/default.png') }}"
+                                      alt="Logo" width="150" height="150"
+                                      class="rounded-circle mb-2 shadow-sm"
+                                      style="object-fit: cover; border: 2px solid grey;">
                               </div>
                               <div class="mb-3">
                                   <label class="form-label fw-semibold">Logo</label>
@@ -745,9 +750,7 @@ document.getElementById('teamLogo').addEventListener('change', function(event) {
                 <div class="offcanvas-body px-4 py-3">
                     <form method="POST" action="{{ route('admin.secondarySaveTeam') }}" class="needs-validation" enctype="multipart/form-data" novalidate>
                         @csrf
-                        <div class="mb-3 text-center">
-                            <img id="secondaryLogoPreview" src="{{ asset('images/default_team_logo.webp') }}" alt="Team Logo Preview" width="150" height="150" class="rounded-circle mb-2 shadow-sm" style="object-fit: cover; border: 2px solid grey;">
-                        </div>
+                      <div class="mb-3 text-center"> <img id="secondaryLogoPreview" src="{{ asset('images/default_team_logo.webp') }}" alt="Team Logo Preview" width="150" height="150" class="rounded-circle mb-2 shadow-sm" style="object-fit: cover; border: 2px solid grey;"> </div>
                         <div class="mb-3">
                             <label for="secondaryTeamLogo" class="form-label fw-semibold">Logo</label>
                             <input type="file" class="form-control shadow-sm" id="secondaryTeamLogo" name="logo" accept="image/*" required>
@@ -813,10 +816,11 @@ document.getElementById('teamLogo').addEventListener('change', function(event) {
                                     <i class="ti ti-crown me-1" style="color: #C0C0C0; font-size: 14px;"></i> {{ $loop->iteration }}
                                 </span>
                             </td>
-                            <td>
-                                <img src="{{ $team->logo ? asset('storage/' . $team->logo) : asset('assets/images/teams/default.png') }}"
-                                    alt="{{ $team->team_name }} Logo" width="40" height="40" class="rounded-circle">
-                            </td>
+                          <td>
+                              <img src="{{ $team->logo ? asset($team->logo) : asset('assets/images/teams/default.png') }}"
+                                  alt="{{ $team->team_name }} Logo" width="40" height="40" class="rounded-circle">
+                          </td>
+
                             <td>{{ $team->team_name }}</td>
                             <td>{{ $team->department }}</td>
                             <td>
@@ -859,9 +863,14 @@ document.getElementById('teamLogo').addEventListener('change', function(event) {
                                 <form method="POST" action="{{ route('admin.secondaryTeam.update', $team->id) }}" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
-                                    <div class="mb-3 text-center">
-                                        <img id="editSecondaryLogoPreview{{ $team->id }}" src="{{ $team->logo ? asset('storage/' . $team->logo) : asset('assets/images/teams/default.png') }}" alt="Logo" width="150" height="150" class="rounded-circle mb-2 shadow-sm" style="object-fit: cover; border: 2px solid grey;">
-                                    </div>
+                                   <div class="mb-3 text-center">
+                                    <img id="editSecondaryLogoPreview{{ $team->id }}"
+                                        src="{{ $team->logo ? asset($team->logo) : asset('assets/images/teams/default.png') }}"
+                                        alt="Logo" width="150" height="150"
+                                        class="rounded-circle mb-2 shadow-sm"
+                                        style="object-fit: cover; border: 2px solid grey;">
+                                </div>
+
                                     <div class="mb-3">
                                         <label class="form-label fw-semibold">Logo</label>
                                         <input type="file" class="form-control" name="logo" id="editSecondaryTeamLogo{{ $team->id }}">

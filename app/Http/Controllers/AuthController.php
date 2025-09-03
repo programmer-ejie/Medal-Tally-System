@@ -13,7 +13,7 @@ class AuthController extends Controller
 
          
             $adminUser = "admin";
-            $adminPass = "12345"; 
+            $adminPass = "admin@2025@admin"; 
 
             if ($username === $adminUser && $password === $adminPass) {
                 session(['user' => $username]);

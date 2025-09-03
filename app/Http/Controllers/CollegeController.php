@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use App\Models\CollegeTeam;
 
 class CollegeController extends Controller
 {
-     public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'logo' => 'nullable|image|max:2048',
@@ -19,7 +18,10 @@ class CollegeController extends Controller
 
         $logoPath = null;
         if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('college_teams', 'public');
+            // Save file to public/college_teams
+            $fileName = time() . '_' . $request->file('logo')->getClientOriginalName();
+            $request->file('logo')->move(public_path('college_teams'), $fileName);
+            $logoPath = 'college_teams/' . $fileName; // relative path to save in DB
         }
 
         CollegeTeam::create([
@@ -32,7 +34,7 @@ class CollegeController extends Controller
         return redirect()->back()->with('success', 'Team added successfully!');
     }
 
-     public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $team = CollegeTeam::findOrFail($id);
 
@@ -48,7 +50,9 @@ class CollegeController extends Controller
 
         $logoPath = $team->logo;
         if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('college_teams', 'public');
+            $fileName = time() . '_' . $request->file('logo')->getClientOriginalName();
+            $request->file('logo')->move(public_path('college_teams'), $fileName);
+            $logoPath = 'college_teams/' . $fileName;
         }
 
         $team->update([
@@ -64,9 +68,15 @@ class CollegeController extends Controller
         return redirect()->back()->with('success', 'Team updated successfully!');
     }
 
-     public function destroy($id)
+    public function destroy($id)
     {
         $team = CollegeTeam::findOrFail($id);
+
+        // Optional: delete logo file from public folder
+        if ($team->logo && file_exists(public_path($team->logo))) {
+            unlink(public_path($team->logo));
+        }
+
         $team->delete();
 
         return redirect()->back()->with('success', 'Team deleted successfully!');

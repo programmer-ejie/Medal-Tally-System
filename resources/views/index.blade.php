@@ -72,7 +72,7 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section" data-aos="fade-up" data-aos-delay="100">
 
-      <img src="assets/img/hero-bg-abstract.jpg" alt="" data-aos="fade-in" class="">
+      <img src="images/bg2.jpeg" alt="" data-aos="fade-in" class="">
 
       <div class="container">
       <div class="row justify-content-center" data-aos="zoom-out">
@@ -159,10 +159,11 @@
                                         <i class="bi bi-trophy-fill me-1 text-warning" style="font-size: 1.3rem;"></i> {{ $loop->iteration }}
                                     </span>
                                 </td>
-                                <td class="text-center align-middle text-nowrap py-2 px-2">
-                                    <img src="{{ $team->logo ? asset('storage/' . $team->logo) : asset('assets/images/teams/default.png') }}"
-                                        alt="{{ $team->team_name }} Logo" width="40" height="40" class="rounded-circle border border-2">
-                                </td>
+                               <td class="text-center align-middle text-nowrap py-2 px-2">
+                                  <img src="{{ $team->logo ? asset($team->logo) : asset('assets/images/teams/default.png') }}"
+                                      alt="{{ $team->team_name }} Logo" width="40" height="40" class="rounded-circle border border-2">
+                              </td>
+
                                 <td class="text-center align-middle text-nowrap py-2 px-2">{{ $team->team_name }}</td>
                                 <td class="text-center align-middle text-nowrap py-2 px-2">{{ $team->department }}</td>
                                 <td class="text-center align-middle text-nowrap py-2 px-2">
@@ -214,9 +215,10 @@
                                     </span>
                                 </td>
                                 <td class="text-center align-middle text-nowrap py-2 px-2">
-                                    <img src="{{ $team->logo ? asset('storage/' . $team->logo) : asset('assets/images/teams/default.png') }}"
-                                        alt="{{ $team->team_name }} Logo" width="40" height="40" class="rounded-circle border border-2">
-                                </td>
+    <img src="{{ $team->logo ? asset($team->logo) : asset('assets/images/teams/default.png') }}"
+         alt="{{ $team->team_name }} Logo" width="40" height="40" class="rounded-circle border border-2">
+</td>
+
                                 <td class="text-center align-middle text-nowrap py-2 px-2">{{ $team->team_name }}</td>
                                 <td class="text-center align-middle text-nowrap py-2 px-2">{{ $team->department }}</td>
                                 <td class="text-center align-middle text-nowrap py-2 px-2">
